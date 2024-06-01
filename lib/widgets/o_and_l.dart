@@ -73,25 +73,23 @@ class OAndL extends StatelessWidget {
             children: [
               const Text(
                 '* OI is desplayed in contracts ',
-                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               Container(
                 height: 8,
-                width: 30,
+                width: 25,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.orange,
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               const Text(
                 'Open Interest',
-                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
