@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../data/json.dart';
 
 class OAndL extends StatelessWidget {
@@ -67,6 +66,35 @@ class OAndL extends StatelessWidget {
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            children: [
+              const Text(
+                '* OI is desplayed in contracts ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Container(
+                height: 8,
+                width: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.orange,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text(
+                'Open Interest',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
@@ -85,11 +113,17 @@ List<TableRow> _buildTableRows() {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(item.strike.toString()),
+            child: Text(
+              item.strike.toString(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(item.iv ?? ''),
+            child: Text(
+              item.iv ?? '',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

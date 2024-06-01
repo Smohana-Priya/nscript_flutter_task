@@ -126,21 +126,24 @@ class _FAndOState extends State<FAndO> {
               height: 10,
             ),
             Container(
-              height: 45,
+              height: 40,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     25.0,
                   ),
-                  border: Border.all()),
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 215, 212, 212))),
               child: TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
                 // labelPadding: EdgeInsets.symmetric(horizontal: 10),
                 isScrollable: true,
                 indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    25.0,
+                    17.0,
                   ),
                   color: Colors.green,
                 ),
+
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black,
 
@@ -181,9 +184,6 @@ class _FAndOState extends State<FAndO> {
                 Center(child: Text('Greeks Content')),
               ],
             )),
-            const SizedBox(
-              height: 20,
-            ),
           ],
         ),
       ),
