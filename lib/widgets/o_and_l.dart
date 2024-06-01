@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../data/json.dart';
 
 class OAndL extends StatelessWidget {
@@ -32,13 +33,13 @@ class OAndL extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     'STRIKE',
-                    style: TextStyle(color: Colors.black, fontSize: 12),
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text('IV',
-                      style: TextStyle(color: Colors.black, fontSize: 12)),
+                      style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),

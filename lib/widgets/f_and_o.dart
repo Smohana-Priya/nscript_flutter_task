@@ -69,7 +69,7 @@ class _FAndOState extends State<FAndO> {
                           style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 133, 131, 131),
                           ),
                           onChanged: (String? newValue) {
                             setState(() {
@@ -145,7 +145,7 @@ class _FAndOState extends State<FAndO> {
                 ),
 
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.black,
+                unselectedLabelColor: const Color.fromARGB(255, 143, 142, 142),
 
                 tabs: const [
                   Tab(
