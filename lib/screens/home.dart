@@ -131,7 +131,7 @@ class _HomeState extends State<Home> {
                       // labelPadding: EdgeInsets.symmetric(horizontal: 10),
                       isScrollable: true,
                       indicatorColor: Colors.blue,
-                      
+
                       tabs: [
                         Tab(
                           child: Text(
