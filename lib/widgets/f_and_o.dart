@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:nscript_flutter_task/modal/data_item.dart';
+import 'package:nscript_flutter_task/data/json.dart';
 import 'package:nscript_flutter_task/widgets/o_and_l.dart';
 
-import '../data/json.dart';
+import '../modal/data_item.dart';
+import '../service/data_parser_service.dart';
 
 class FAndO extends StatefulWidget {
   const FAndO({super.key});
@@ -13,9 +13,11 @@ class FAndO extends StatefulWidget {
 }
 
 class _FAndOState extends State<FAndO> {
-  String selectedOptionValue = 'OPTION(61)';
-  DateTime? selectedDate;
   final DataItem dataItem = parseData(data);
+  String selectedOptionValue = 'OPTION(61)';
+  String? selectedDate = 'Aug 26 2021';
+
+  // DateTime? selectedDate;
   List<TableRow> rows = [];
 
   List<String> options = [
@@ -25,17 +27,11 @@ class _FAndOState extends State<FAndO> {
     'OPTION(64)'
   ];
   void selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
+    //   if (picked != null && picked != selectedDate) {
+    //     setState(() {
+    //       selectedDate = picked;
+    //     });
+    //   }
   }
 
   @override
@@ -91,34 +87,39 @@ class _FAndOState extends State<FAndO> {
                     width: 15,
                   ),
                   Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        selectDate(context);
-                        // print('${selectedDate?.toLocal()}'.split(' ')[0]);
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 0.3),
-                            borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 0.3),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: selectedDate,
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                selectedDate == null
-                                    ? 'Select Date'
-                                    : DateFormat('MMMM dd yyyy')
-                                        .format(selectedDate!),
-                              ),
-                              const Icon(
-                                Icons.arrow_drop_down,
-                              ),
-                            ],
-                          )),
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            color: Color.fromARGB(255, 133, 131, 131),
+                          ),
+                          onChanged: (String? newValue) {
+                            // setState(() {
+                            //   selectedOptionValue = newValue!;
+                            // });
+                          },
+                          items: dataItem.expiry!
+                              .map<DropdownMenuItem<String>>((dynamic value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

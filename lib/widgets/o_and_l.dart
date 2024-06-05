@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../data/json.dart';
+import '../modal/data_item.dart';
+import '../service/data_parser_service.dart';
 
 class OAndL extends StatelessWidget {
   const OAndL({super.key});
@@ -102,7 +104,10 @@ class OAndL extends StatelessWidget {
 List<TableRow> _buildTableRows() {
   List<TableRow> rows = [];
 
-  for (var item in dataItem.data!) {
+  final DataItem dataItem = parseData(data);
+
+  for (var item
+      in dataItem.data!.where((e) => e.expirydate == 1624559340000).toList()) {
     rows.add(
       TableRow(
         children: [
