@@ -105,9 +105,10 @@ class _FAndOState extends State<FAndO> {
                             color: Color.fromARGB(255, 133, 131, 131),
                           ),
                           onChanged: (String? newValue) {
-                            // setState(() {
-                            //   selectedOptionValue = newValue!;
-                            // });
+                            setState(() {
+                              selectedDate = newValue!;
+                            });
+                           
                           },
                           items: dataItem.expiry!
                               .map<DropdownMenuItem<String>>((dynamic value) {
@@ -176,13 +177,13 @@ class _FAndOState extends State<FAndO> {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
                 child: TabBarView(
               children: [
-                Center(child: Text('Buy/Sell Content')),
-                Center(child: Text('LTP Content')),
-                OAndL(),
-                Center(child: Text('Greeks Content')),
+                const Center(child: Text('Buy/Sell Content')),
+                const Center(child: Text('LTP Content')),
+                OAndL(selectedDate: selectedDate),
+                const Center(child: Text('Greeks Content')),
               ],
             )),
           ],

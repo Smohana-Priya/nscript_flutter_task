@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../data/json.dart';
 import '../modal/data_item.dart';
 import '../service/data_parser_service.dart';
+import '../service/date_formatter_service.dart';
 
 class OAndL extends StatelessWidget {
-  const OAndL({super.key});
+  final String? selectedDate;
+  const OAndL({super.key, this.selectedDate});
 
   @override
   Widget build(BuildContext context) {
@@ -99,43 +101,45 @@ class OAndL extends StatelessWidget {
       ],
     );
   }
-}
 
-List<TableRow> _buildTableRows() {
-  List<TableRow> rows = [];
+  List<TableRow> _buildTableRows() {
+    List<TableRow> rows = [];
 
-  final DataItem dataItem = parseData(data);
+    final DataItem dataItem = parseData(data);
 
-  for (var item
-      in dataItem.data!.where((e) => e.expirydate == 1624559340000).toList()) {
-    rows.add(
-      TableRow(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(item.callOiChange ?? ''),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              item.strike.toString(),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+    for (var item in dataItem.data!
+        .where((e) =>
+            DateFormatterService.formatTimestamp(e.expirydate!) == selectedDate)
+        .toList()) {
+      rows.add(
+        TableRow(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(item.callOiChange ?? ''),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              item.iv ?? '',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                item.strike.toString(),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(item.putOiChange ?? ''),
-          ),
-        ],
-      ),
-    );
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                item.iv ?? '',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(item.putOiChange ?? ''),
+            ),
+          ],
+        ),
+      );
+    }
+    return rows;
   }
-  return rows;
 }
