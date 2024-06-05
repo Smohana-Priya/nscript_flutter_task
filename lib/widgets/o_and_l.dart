@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../data/json.dart';
 import '../modal/data_item.dart';
 import '../service/data_parser_service.dart';
@@ -11,66 +10,166 @@ class OAndL extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DataItem dataItem = parseData(data);
+    final List<Data> d = dataItem.data!
+        .where((e) =>
+            DateFormatterService.formatTimestamp(e.expirydate!) == selectedDate)
+        .toList();
+    int halfLength = dataItem.data!
+            .where((e) =>
+                DateFormatterService.formatTimestamp(e.expirydate!) ==
+                selectedDate)
+            .toList()
+            .length ~/
+        2;
     return Column(
       children: [
         const SizedBox(
-          height: 10,
+          height: 15,
         ),
-        Table(
-          border: TableBorder.all(
-              width: 1.0, color: const Color.fromARGB(255, 234, 232, 232)),
-          columnWidths: const {
-            0: FlexColumnWidth(),
-            1: FlexColumnWidth(),
-            2: FlexColumnWidth(),
-            3: FlexColumnWidth(),
-          },
-          children: const [
-            TableRow(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Call Ol(Chg%)',
-                      style: TextStyle(color: Colors.grey, fontSize: 12)),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'STRIKE',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 238, 235, 235))),
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text('Call Ol(Chg%)',
+                        style: TextStyle(color: Colors.grey, fontSize: 12)),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('IV',
-                      style: TextStyle(color: Colors.grey, fontSize: 12)),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 238, 235, 235))),
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      'STRIKE',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Put Ol(chg%)',
-                      style: TextStyle(color: Colors.grey, fontSize: 12)),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 238, 235, 235))),
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text('IV',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold)),
+                  ),
                 ),
-              ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 238, 235, 235))),
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text('Put Ol(chg%)',
+                        style: TextStyle(color: Colors.grey, fontSize: 12)),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
 
         /// to make table content scrollable
         Expanded(
-          child: SingleChildScrollView(
-            child: Table(
-              border: TableBorder.all(
-                  width: 1.0, color: const Color.fromARGB(255, 234, 232, 232)),
-              columnWidths: const {
-                0: FlexColumnWidth(),
-                1: FlexColumnWidth(),
-                2: FlexColumnWidth(),
-                3: FlexColumnWidth(),
-              },
-              children: _buildTableRows(),
-            ),
-          ),
-        ),
+            child: ListView.builder(
+                itemCount: d.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: index <= halfLength
+                                  ? const Color(0xffFEED96)
+                                  : null,
+                              border: Border.all(
+                                  color: const Color.fromARGB(
+                                      255, 238, 235, 235))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Center(
+                                child: Text(d[index].callOiChange ?? '')),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: index == halfLength
+                                  ? const Color(0xffFEED96)
+                                  : null,
+                              border: Border.all(
+                                  color: const Color.fromARGB(
+                                      255, 238, 235, 235))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child:
+                                Center(child: Text(d[index].strike.toString())),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: index == halfLength
+                                  ? const Color(0xffFEED96)
+                                  : null,
+                              border: Border.all(
+                                  color: const Color.fromARGB(
+                                      255, 238, 235, 235))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Center(child: Text(d[index].iv ?? '')),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: index >= halfLength
+                                  ? const Color(0xffFEED96)
+                                  : null,
+                              border: Border.all(
+                                  color: const Color.fromARGB(
+                                      255, 238, 235, 235))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child:
+                                Center(child: Text(d[index].putOiChange ?? '')),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                })),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
@@ -100,46 +199,5 @@ class OAndL extends StatelessWidget {
         )
       ],
     );
-  }
-
-  List<TableRow> _buildTableRows() {
-    List<TableRow> rows = [];
-
-    final DataItem dataItem = parseData(data);
-
-    for (var item in dataItem.data!
-        .where((e) =>
-            DateFormatterService.formatTimestamp(e.expirydate!) == selectedDate)
-        .toList()) {
-      rows.add(
-        TableRow(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(item.callOiChange ?? ''),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                item.strike.toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                item.iv ?? '',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(item.putOiChange ?? ''),
-            ),
-          ],
-        ),
-      );
-    }
-    return rows;
   }
 }
